@@ -8,7 +8,6 @@ import annotation.Column;
 import annotation.PrimaryKey;
 import annotation.Table;
 import dao.BddObject;
-import dao.DbConnection;
 
 @Table
 public class Sortie extends BddObject<Sortie>{
@@ -96,7 +95,7 @@ public class Sortie extends BddObject<Sortie>{
         Article article = new Article();
         article.setId(getIdArticle());
         Sortie dernierSortie = article.getDernierSortieValider(con, idMagasin);
-        if (dernierSortie.getDateSortie().before(date)) {
+        if (dernierSortie.getDateSortie().after(date)) {
             throw new Exception("La date de sortie doit être supérieur à la date du dernier sortie valider.");
         }
     }
@@ -122,7 +121,9 @@ public class Sortie extends BddObject<Sortie>{
         return somme;
     }
 
-    public void checkEntre() {
-
+    public List<Sortie> AllSortiesInvalider() throws Exception {
+        Sortie sortie = new Sortie();
+        String query = "select * from sortie where etat < 20";
+        return sortie.executeQuery(null, query, sortie);
     }
 }

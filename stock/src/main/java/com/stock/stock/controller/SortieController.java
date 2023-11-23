@@ -2,7 +2,10 @@ package com.stock.stock.controller;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +17,19 @@ import com.stock.stock.mapping.Sortie;
 import dao.DbConnection;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/sorties")
 public class SortieController {
+    @GetMapping
+    public List<Sortie> all() throws Exception {
+        return new Sortie().findAll(null);
+    }
+
+    @GetMapping("/invalidate")
+    public List<Sortie> allInvalidate() throws Exception {
+        return new Sortie().AllSortiesInvalider();
+    }
+
     @PostMapping("/add")
     public Sortie add(@RequestBody SortieFormulaire sortieFormulaire){
         Sortie sortie = new Sortie();

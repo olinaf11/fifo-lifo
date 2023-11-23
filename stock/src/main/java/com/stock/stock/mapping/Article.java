@@ -18,6 +18,8 @@ public class Article extends BddObject<Article>{
     String unite;
     @Column
     String nom;
+    @Column
+    String code;
 
     public String getId() {
         return id;
@@ -48,6 +50,15 @@ public class Article extends BddObject<Article>{
             throw new Exception("Le nom ne doit pas être vide");
         }
         this.nom = nom;
+    }
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) throws Exception {
+        if (code.equals(null) || code.equals("")) {
+            throw new Exception("Le nom ne doit pas être vide");
+        }
+        this.code = code;
     }
 
     public Sortie getDernierSortieValider(Connection con, String idMagasin) throws Exception {
